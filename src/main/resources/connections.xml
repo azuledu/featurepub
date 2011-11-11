@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="dataSourceCHD" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@chddb2.idelab.uva.es:1521:gisduero" />
+		<property name="username" value="gisduero_09" />
+		<property name="password" value="gisduero_09" />
+	</bean>
+
+	<bean id="connectionParametersDBCHD" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="java.lang.Object">
+				<entry key="dbtype" value="oracle" />
+				<entry key="host" value="chddb2.idelab.uva.es" />
+				<entry key="port" value="1521" />
+				<entry key="database" value="gisduero" />
+				<entry key="user" value="gisduero_09" />
+				<entry key="passwd" value="gisduero_09" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="connectionParametersWFSCHD" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="WFSDataStoreFactory:GET_CAPABILITIES_URL"
+					value="http://www.mirame.chduero.es/duerowfd?SERVICE=WFS&amp;VERSION=1.0.0&amp;REQUEST=GetCapabilities" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+</beans>

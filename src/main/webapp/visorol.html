@@ -1,0 +1,172 @@
+<html>
+<head>
+    <title>Aula CHDuero</title>
+    <link rel="stylesheet" type="text/css" href="http://css.idelab.uva.es/aulachduero.css" />
+    <script src="http://itastdevserver.tel.uva.es/lib/OpenLayers-2.10/OpenLayers.js"></script>
+</head>
+<body onload="init()" >
+    <div id="wrapper">
+	<div id="banner"><div id="header"><div id="header-inner">
+		<a id="logo" href="http://idelab.uva.es/"><img id="logo-image" src="http://img.idelab.uva.es/world_logo.png" alt="IDELab" /></a>
+		<p class="right">
+			<a href="http://aulachduero.idelab.uva.es/"><img src="http://img.idelab.uva.es/chd_logo.jpg" alt="CHD" height="100px" /></a>
+      	</p>
+	</div></div></div>
+
+    <div id="main">
+		<h1>Visor Openlayers + Servidor de tem&aacute;ticos de la CHD</h1>
+		<div style="width:100%; height:70%" id="map">
+<!--			<script defer="defer" type="text/javascript">
+			OpenLayers.ProxyHost="/cgi-bin/proxy.cgi?url=";
+			var map = new OpenLayers.Map('map');
+			var wms = new OpenLayers.Layer.Google(
+            "Google Satellite",
+            {type: G_SATELLITE_MAP, sphericalMercator: true} );
+			map.addLayer(wms);
+			var rios = new OpenLayers.Layer.Vector("Rios", 
+				"http://itastdevserver.tel.uva.es:8080/GoogleEarthTematico/dispatcher?queryName=Rivers&form_action=Preview");
+
+			map.addLayer(rios);
+            map.addControl(new OpenLayers.Control.PanZoomBar());
+            map.addControl(new OpenLayers.Control.MouseToolbar());
+            map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));        
+            map.addControl(new OpenLayers.Control.MousePosition());
+            map.addControl(new OpenLayers.Control.KeyboardDefaults());
+    		map.setCenter(new OpenLayers.LonLat(-4.5, 41.7), 8);
+			</script>
+-->
+    <script type="text/javascript"> 
+        var lon = -5;
+        var lat = 40;
+        var zoom = 8;
+        var map, select;
+ 
+        function init(){
+			OpenLayers.ProxyHost="/cgi-bin/proxy.cgi?url=";
+            var options = {
+                projection: new OpenLayers.Projection("EPSG:900913"),
+                displayProjection: new OpenLayers.Projection("EPSG:4326"),
+                units: "m",
+                maxResolution: 156543.0339 ,
+                maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34,
+                                                 20037508.34, 20037508.34)
+            };
+            map = new OpenLayers.Map('map', options);
+/*
+            var gmap = new OpenLayers.Layer.Google("Google Satellite", {type: 'google.maps.MapTypeId.SATELLITE', numZoomLevels: 22, sphericalMercator:true}); 
+*/
+            var mapnik = new OpenLayers.Layer.TMS(
+                "OpenStreetMap (Mapnik)",
+                "http://tile.openstreetmap.org/",
+                {
+                    type: 'png', getURL: osm_getTileURL,
+                    attribution: '<a href="http://www.openstreetmap.org/">OpenStreetMap</a>'
+                }
+            );
+
+            var Rivers = new OpenLayers.Layer.Vector("Rivers", {
+				visibility: false,
+                projection: map.displayProjection,
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: "http://itastdevserver.tel.uva.es:8080/GoogleEarthTematico/dispatcher?queryName=Rivers&form_action=Preview",
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true
+                    })
+                })
+            });
+
+            var LakesPhoto = new OpenLayers.Layer.Vector("LakesPhoto", {
+				visibility: false,
+                projection: map.displayProjection,
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: "http://itastdevserver.tel.uva.es:8080/GoogleEarthTematico/dispatcher?queryName=LakesPhoto&form_action=Preview",
+                    format: new OpenLayers.Format.KML({
+                        extractStyles: true,
+                        extractAttributes: true
+                    })
+                })
+            });
+
+            map.addLayers([mapnik, Rivers, LakesPhoto]);
+ 
+            select = new OpenLayers.Control.SelectFeature(LakesPhoto);
+            
+            LakesPhoto.events.on({
+                "featureselected": onFeatureSelect,
+                "featureunselected": onFeatureUnselect
+            });
+  
+            map.addControl(select);
+            select.activate();   
+ 
+            map.addControl(new OpenLayers.Control.LayerSwitcher());
+ 
+            map.addControl(new OpenLayers.Control.MousePosition());
+
+            map.zoomToExtent(
+                new OpenLayers.Bounds(
+                    -5, 40.5, -3, 43
+                ).transform(map.displayProjection, map.projection)
+            );
+        }
+        function onPopupClose(evt) {
+            select.unselectAll();
+        }
+        function onFeatureSelect(event) {
+            var feature = event.feature;
+            var selectedFeature = feature;
+            var popup = new OpenLayers.Popup.FramedCloud("chicken", 
+                feature.geometry.getBounds().getCenterLonLat(),
+                new OpenLayers.Size(100,100),
+                "<h2>"+feature.attributes.name + "</h2>" + feature.attributes.description,
+                null, true, onPopupClose
+            );
+            feature.popup = popup;
+            map.addPopup(popup);
+        }
+        function onFeatureUnselect(event) {
+            var feature = event.feature;
+            if(feature.popup) {
+                map.removePopup(feature.popup);
+                feature.popup.destroy();
+                delete feature.popup;
+            }
+        }
+        function osm_getTileURL(bounds) {
+            var res = this.map.getResolution();
+            var x = Math.round((bounds.left - this.maxExtent.left) / (res * this.tileSize.w));
+            var y = Math.round((this.maxExtent.top - bounds.top) / (res * this.tileSize.h));
+            var z = this.map.getZoom();
+            var limit = Math.pow(2, z);
+ 
+            if (y < 0 || y >= limit) {
+                return OpenLayers.Util.getImagesLocation() + "404.png";
+            } else {
+                x = ((x % limit) + limit) % limit;
+                return this.url + z + "/" + x + "/" + y + "." + this.type;
+            }
+        }
+    </script> 
+
+		</div>
+		<em>Notas</em>
+		<ul>
+			<li>Pulsando sobre los elementos del mapa podemos obtener m&aacute;s informaci&oacute;n.</li>
+		</ul>
+    </div></div>
+
+    <div id="footer"><hr />
+      <p class="left">
+	<a href="http://aulachduero.idelab.uva.es/"><img src="http://img.idelab.uva.es/chd_logo.jpg" alt="CHD" height="40px" /></a>
+      </p>
+      <p class="right">
+	<a href="http://idelab.uva.es/"><img src="http://img.idelab.uva.es/world_logo.png" alt="IDELab" height="50px" /></a> 
+	<span><b>IDELab</b> <br/>IDELab se ha creado para promover y desarrollar el uso de las IDE <br/>
+		(Infraestructuras de Datos Espaciales) mediante el desarrollo <br/>de proyectos piloto y tecnolog&iacute;as experimentales.</span>
+      </p>
+    </div>
+</body>
+</html>
