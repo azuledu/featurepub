@@ -1,17 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<artifactId>maven-java</artifactId>
 		<groupId>es.uva.idelab</groupId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>es.uva.idelab</groupId>
 	<artifactId>featurepub</artifactId>
 	<packaging>war</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>Feature Publisher</name>
-	<description>Creador de mapas temáticos.</description>
-	<url>http://mvn.idelab.uva.es/featurepub</url>
+	<description>Publish features with its attributes in a thematic map. It's also possible to add attributes from external sources.</description>
 
 	<properties>
 		<spring.version>3.0.5.RELEASE</spring.version>

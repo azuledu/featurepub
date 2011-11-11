@@ -35,8 +35,8 @@
     <!-- ==================================================== -->
     <menu name="${project.name}">
  <!-- <item name="Screenshots" href="screenshots.html"/>   -->
-      <item name="Web site" href="http://itastdevserver.tel.uva.es/proyectos/aulachduero"/> 
-      <item name="Demo" href="http://itastdevserver.tel.uva.es:8080/${project.artifactId}"/>    
+ <!-- <item name="Web site" href="http://dev.idelab.uva.es/${project.artifactId}"/> -->
+      <item name="Demo" href="http://${project.artifactId}.idelab.uva.es"/>    
       <item name="Download" href="http://rep.idelab.uva.es/content/groups/public/es/uva/idelab/${project.artifactId}"/>    
         
     </menu>
