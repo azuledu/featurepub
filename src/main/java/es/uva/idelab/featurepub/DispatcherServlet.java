@@ -37,11 +37,15 @@ public class DispatcherServlet extends HttpServlet {
 
 	public DispatcherServlet() {
 		super();
-		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		this.producer = (Producer) appContext.getBean("producer");
-		thematicEncoder = producer.getThematicEncoder();
+		initBeans();
 	}
 
+	public void initBeans() {
+		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		this.producer = (Producer) appContext.getBean("producer");
+		thematicEncoder = producer.getThematicEncoder();	
+	}
+	
 	public void setOutFile(String outFile) {
 		this.outFile = outFile;
 	}
