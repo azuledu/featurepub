@@ -37,8 +37,7 @@ public class DispatcherServlet extends HttpServlet {
 
 	public DispatcherServlet() {
 		super();
-		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml", "featureFilters.xml",
-				"featureQueries.xml", "connections.xml", "processes.xml", "data.xml" });
+		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		this.producer = (Producer) appContext.getBean("producer");
 		thematicEncoder = producer.getThematicEncoder();
 	}

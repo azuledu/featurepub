@@ -13,7 +13,13 @@
     xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring">
 
 
-
+    <import resource="connections.xml"/>
+    <import resource="featureQueries.xml"/>
+    <import resource="featureFilters.xml"/>
+    <import resource="processes.xml"/>
+    <import resource="data.xml"/>
+    
+        
 	<!-- freemarker config -->
 <!--	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 	  <property name="templateLoaderPath" value="/WEB-INF/description_templates/"/>
