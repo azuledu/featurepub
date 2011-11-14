@@ -18,11 +18,24 @@ public class SQLDataDAO implements DataDAO {
 	private String featureFK;
 	private Map<String, Object> dataMap;
 
-	public SQLDataDAO(DataSource dataSource, String sql, RowMapper<Object> rowMapper, String featureFK) throws Exception {
+	public SQLDataDAO(DataSource dataSource) throws Exception {
 		this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+	}
+
+	public void setSql(String sql) {
 		this.sql = sql;
+	}
+
+	public void setRowMapper(RowMapper<Object> rowMapper) {
 		this.rowMapper = rowMapper;
+	}
+
+	public void setFeatureFK(String featureFK) {
 		this.featureFK = featureFK;
+	}
+
+	public void setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
 	}
 
 	public Map<String, Object> getDataMap(SimpleFeature feature) {

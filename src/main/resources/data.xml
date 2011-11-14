@@ -9,17 +9,17 @@
 
 	<bean id="LakesPhotoData" class="es.uva.idelab.featurepub.Process.Data.SQLDataDAO">
 		<constructor-arg name="dataSource" ref="dataSourceCHD" />
-		<constructor-arg name="sql" value="SELECT * FROM LAKE_SEGMENT_PHOTO, PHOTO WHERE LAKE_SEGMENT_PHOTO.LAKE_SEGMENT_FK = ?" />
-		<constructor-arg name="rowMapper" ref="DBRowMapper" />
-		<constructor-arg name="featureFK" value="SEGMENT_CODE" />		
+		<property name="sql" value="SELECT * FROM LAKE_SEGMENT_PHOTO, PHOTO WHERE LAKE_SEGMENT_PHOTO.LAKE_SEGMENT_FK = ?" />
+		<property name="rowMapper" ref="DBRowMapper" />
+		<property name="featureFK" value="SEGMENT_CODE" />		
 	</bean>
 
 
 	<bean id="RiversData" class="es.uva.idelab.featurepub.Process.Data.SQLDataDAO">
 		<constructor-arg name="dataSource" ref="dataSourceCHD" />
-		<constructor-arg name="sql" value="SELECT NAME FROM RIVER_WATER_BODY WHERE RIVER_WATER_BODY_PK = ?" />
-		<constructor-arg name="rowMapper" ref="DBRowMapper" />
-		<constructor-arg name="featureFK" value="RIVER_WATER_BODY_FK" />		
+		<property name="sql" value="SELECT NAME FROM RIVER_WATER_BODY WHERE RIVER_WATER_BODY_PK = ?" />
+		<property name="rowMapper" ref="DBRowMapper" />
+		<property name="featureFK" value="RIVER_WATER_BODY_FK" />		
 	</bean>
 
 
