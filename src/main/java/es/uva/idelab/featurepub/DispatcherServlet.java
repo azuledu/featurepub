@@ -1,6 +1,5 @@
 package es.uva.idelab.featurepub;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
@@ -20,7 +19,6 @@ import org.geotools.data.Query;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import es.uva.idelab.featurepub.Process.Process;
 import es.uva.idelab.featurepub.Process.Styles;
 import es.uva.idelab.featurepub.ThematicEncoder.ThematicEncoder;
 
@@ -35,13 +33,12 @@ public class DispatcherServlet extends HttpServlet {
 	ThematicEncoder thematicEncoder;
 	Producer producer;
 
-	private File log4JPropertiesFile;
-	private String outFile = "thematicCHD.kml";
+	private String outFile = "featurePub.kml";
 
 	public DispatcherServlet() {
 		super();
-		appContext = new ClassPathXmlApplicationContext(new String[] { "dispatcher-servlet.xml", "feature-filters.xml",
-				"feature-queries.xml", "connections.xml", "processes.xml", "data.xml" });
+		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml", "featureFilters.xml",
+				"featureQueries.xml", "connections.xml", "processes.xml", "data.xml" });
 		this.producer = (Producer) appContext.getBean("producer");
 		thematicEncoder = producer.getThematicEncoder();
 	}
@@ -118,44 +115,4 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		}
 	}
-
-	private void configureLogs() {
-		// Lee el directorio donde va a ser colocado el archivo de logs
-		String directory = this.getInitParameter(getInitParameter("log-directory"));
-
-		// Adiciona el parametro del directorio como un Property del sistema
-		// para que pueda ser utilizado dentro del archivo de configuracion del Log4J
-		// System.setProperty("log.directory",directory);
-
-		// Extrae el path donde se encuentra el contexto
-		// Asume que el archivo de configuracion se encuentra en este directorio
-		String prefix = directory;// getServletContext().getRealPath("/");
-
-		// Lee el nombre del archivo de configuracion de Log4J
-		String file = this.getInitParameter("log4j-init-file");
-		System.out.println("Prefix = " + prefix + ",   file=" + file);
-		try {
-			log4JPropertiesFile = new File(prefix, file);
-			System.out.println("Da el nullpointer en la linea anterior");
-			if (!log4JPropertiesFile.isFile()) {
-				System.err.println("ERROR: No puede leer el archivo de configuración. " + log4JPropertiesFile);
-				URL url = DispatcherServlet.class.getResource("/log4j.properties");
-				System.out.println("Default log config file: " + url);
-				if (url != null && url.getProtocol().equals("file")) {
-					log4JPropertiesFile = new File(url.getFile());
-					System.out.println("Utilizando archivo de configuración por defecto: " + log4JPropertiesFile);
-				} else {
-					System.err.println("No se ha encontrado el archivo de configuración por defecto. " + url);
-					return;
-				}
-			}
-		} catch (Exception e) {
-			prefix = getServletContext().getRealPath("/");
-			file = "log4j.properties";
-			log4JPropertiesFile = new File(prefix, file);
-			System.out.println(e.getMessage());
-			logger.debug(e);
-		}
-	}
-
 }

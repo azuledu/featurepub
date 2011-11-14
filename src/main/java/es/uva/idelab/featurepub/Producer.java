@@ -3,7 +3,6 @@ package es.uva.idelab.featurepub;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -22,37 +21,24 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.feature.NameImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.process.ProcessExecutor;
-import org.geotools.process.ProcessFactory;
-import org.geotools.process.Processors;
-import org.geotools.process.Process;
-import org.geotools.process.Progress;
-import org.geotools.process.gs.GSProcess;
-import org.geotools.process.feature.gs.CountProcess;
-import org.geotools.process.feature.gs.FeatureGSProcessFactory;
-import org.geotools.process.feature.*;
 import org.geotools.referencing.CRS;
 import org.geotools.sld.v1_1.SLDConfiguration;
 import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.util.KVP;
 import org.geotools.xml.Configuration;
 import org.geotools.xml.Parser;
 
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-import org.opengis.feature.type.Name;
 import org.opengis.filter.Filter;
 import org.opengis.filter.FilterFactory2;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import org.springframework.beans.factory.InitializingBean;
 
-//import es.uva.idelab.featurepub.Process.Process;
-import es.uva.idelab.featurepub.Process2.Centroid2;
 import es.uva.idelab.featurepub.ThematicEncoder.KmlThematicEncoder;
 import es.uva.idelab.featurepub.ThematicEncoder.ThematicEncoder;
+import es.uva.idelab.featurepub.Process.Process;
 
 public class Producer implements InitializingBean {
 
@@ -74,7 +60,7 @@ public class Producer implements InitializingBean {
 	private double yMin = -80;
 	private double yMax = 80;
 	Query query;
-	List<es.uva.idelab.featurepub.Process.Process> processes;
+	List<Process> processes;
 	Map<String, Object> connectionParameters;
 	DataStore dataStore;
 	SimpleFeatureSource featureSource;
@@ -110,7 +96,7 @@ public class Producer implements InitializingBean {
 		this.query = query;
 	}
 
-	public void setProcesses(List<es.uva.idelab.featurepub.Process.Process> processes) {
+	public void setProcesses(List<Process> processes) {
 		this.processes = processes;
 	}
 
@@ -127,7 +113,7 @@ public class Producer implements InitializingBean {
 	}
 
 	public void setQueryFilters() throws IOException {
-		List<Filter> filters = new ArrayList();
+		List<Filter> filters = new ArrayList<Filter>();
 
 		FilterFactory2 filterFactory = CommonFactoryFinder.getFilterFactory2(null);
 
@@ -217,38 +203,6 @@ public class Producer implements InitializingBean {
 
 		SimpleFeatureIterator featuresIterator = features.features();
 
-		
-//		Name name = new NameImpl("org.geotools.process.feature.gs", "CountProcess");
-
-//		org.geotools.process.Process count = FeatureGSProcessFactory(name);
-
-//		org.geotools.process.Process count = Processors.createProcess(name);
-
-		Map<String, Object> params = new HashMap<String, Object>();
-
-//		params.put("features", features);
-
-//		Map<String, Object> results = count.execute(params, null);
-
-//		GSProcess cp = new CountProcess();
-//		Number numfeat = cp.execute(features);
-//		params.put("features", features);
-		
-		Name name = new NameImpl("tematicos", "micentroide");
-		Process cp = Processors.createProcess( name );
-		//Centroid2 cp = new Centroid2();
-		Map<String,Object> input = new KVP("features", features);
-		
-        //ProcessExecutor engine = Processors.newProcessExecutor(2);		
-        //Progress working = engine.submit(cp, input );
-        
-		Map<String, Object> results = cp.execute(input, null);
-		System.out.println(results.get("result"));
-		//		System.out.println(numfeat);
-		
-
-		
-		/*
 		try {
 			while (featuresIterator.hasNext()) {
 
@@ -277,7 +231,7 @@ public class Producer implements InitializingBean {
 			}
 		} finally {
 			featuresIterator.close();
-		}*/
+		}
 		thematicEncoder.endDocument();
 	}
 }
