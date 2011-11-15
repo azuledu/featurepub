@@ -17,8 +17,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.geotools.data.Query;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.uva.idelab.featurepub.Process.Process;
 import es.uva.idelab.featurepub.Process.Styles;
 import es.uva.idelab.featurepub.ThematicEncoder.ThematicEncoder;
 
@@ -28,7 +30,7 @@ public class DispatcherServlet extends HttpServlet {
 	ApplicationContext appContext;
 
 	Query query;
-	List<es.uva.idelab.featurepub.Process.Process> processes;
+	List<Process> processes;
 	String stylesName;
 	ThematicEncoder thematicEncoder;
 	Producer producer;
@@ -37,11 +39,12 @@ public class DispatcherServlet extends HttpServlet {
 
 	public DispatcherServlet() {
 		super();
-		initBeans();
-	}
+		appContext = new ClassPathXmlApplicationContext(new String[] { "../../conf/applicationContext.xml" });
+		this.producer = (Producer) appContext.getBean("producer");
+		thematicEncoder = producer.getThematicEncoder();	}
 
-	public void initBeans() {
-		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+	public void reloadConf() {
+		((ConfigurableApplicationContext)appContext).refresh();
 		this.producer = (Producer) appContext.getBean("producer");
 		thematicEncoder = producer.getThematicEncoder();	
 	}
@@ -53,8 +56,15 @@ public class DispatcherServlet extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String form_action = request.getParameter("form_action");
+		if ("ReloadConf".equalsIgnoreCase(form_action)) {
+			reloadConf();
+			response.sendRedirect(response.encodeRedirectURL("/FeaturePub"));
+			return;
+		}
+		
 		this.query = (Query) appContext.getBean(request.getParameter("queryName") + "Query");
-		this.processes = (List<es.uva.idelab.featurepub.Process.Process>) appContext.getBean(request.getParameter("queryName") + "Process");
+		this.processes = (List<Process>) appContext.getBean(request.getParameter("queryName") + "Process");
 		this.stylesName = request.getParameter("queryName") + ".sld";
 
 		if (logger.isDebugEnabled()) {
@@ -72,7 +82,6 @@ public class DispatcherServlet extends HttpServlet {
 		// BBOX=[longitude_west, latitude_south, longitude_east, latitude_north]
 		String bboxParam = request.getParameter("BBOX");
 
-		String form_action = request.getParameter("form_action");
 		if ("Preview".equalsIgnoreCase(form_action)) {
 			response.setContentType("text/plain;charset=UTF-8"); // Streaming
 		} else { // "Download" y "NetworkLink"

@@ -243,6 +243,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>GoogleEarthTematico</finalName>
+		<finalName>FeaturePub</finalName>
 	</build>
 </project>
