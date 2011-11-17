@@ -42,7 +42,7 @@ public class Description implements Process {
 		this.templateName = templateName;
 
 		Configuration freemarkerConfig = new Configuration();
-		freemarkerConfig.setClassForTemplateLoading(DispatcherServlet.class, "../../../../../../templates");
+		freemarkerConfig.setClassForTemplateLoading(DispatcherServlet.class, "../../../../../../data/templates");
 		freemarkerConfig.setObjectWrapper(new DefaultObjectWrapper());
 
 		try {

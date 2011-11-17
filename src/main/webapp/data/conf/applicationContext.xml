@@ -13,11 +13,11 @@
     xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring">
 
 
-    <import resource="connections.xml"/>
-    <import resource="featureQueries.xml"/>
-    <import resource="featureFilters.xml"/>
-    <import resource="processes.xml"/>
-    <import resource="data.xml"/>
+    <import resource="chd/connections.xml"/>
+    <import resource="chd/featureQueries.xml"/>
+    <import resource="chd/featureFilters.xml"/>
+    <import resource="chd/processes.xml"/>
+    <import resource="chd/data.xml"/>
     
         
 	<!-- freemarker config -->
@@ -41,7 +41,7 @@
  	<bean id="producer" class="es.uva.idelab.featurepub.Producer" >
         <constructor-arg>
  			<bean name="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-				<property name="configLocation" value="/../../ehcache.xml" />
+				<property name="configLocation" value="/../../data/ehcache.xml" />
 			</bean>       
         </constructor-arg>
         <property name="connectionParameters" ref="connectionParametersDBCHD" />
