@@ -1,10 +1,10 @@
-package es.uva.idelab.featurepub.ThematicEncoder;
+package es.uva.idelab.featurepub.Encoder;
 
 import java.io.OutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class AbstractThematicEncoder {
+public class AbstractEncoder {
 
 	final Log logger = LogFactory.getLog(this.getClass());
 	

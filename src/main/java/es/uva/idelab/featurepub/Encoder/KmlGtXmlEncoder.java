@@ -1,4 +1,4 @@
-package es.uva.idelab.featurepub.ThematicEncoder;
+package es.uva.idelab.featurepub.Encoder;
 
 import java.io.IOException;
 
@@ -10,12 +10,12 @@ import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-public class KmlGtXmlThematicEncoder extends AbstractThematicEncoder implements KmlThematicEncoder {
+public class KmlGtXmlEncoder extends AbstractEncoder implements KmlEncoder {
 
 	private Encoder encoder = new Encoder(new KMLConfiguration());
 
 	
-	public KmlGtXmlThematicEncoder() {
+	public KmlGtXmlEncoder() {
 		System.setProperty("org.geotools.referencing.forceXY", "true");
 		encoder.setIndenting(true);
 		encoder.setOmitXMLDeclaration(true);

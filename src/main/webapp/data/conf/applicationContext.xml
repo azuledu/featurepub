@@ -46,7 +46,7 @@
         </constructor-arg>
         <property name="connectionParameters" ref="connectionParametersDBCHD" />
 		<property name="thematicEncoder" >
-			<bean class="es.uva.idelab.featurepub.ThematicEncoder.KmlDirectThematicEncoder"></bean>
+			<bean class="es.uva.idelab.featurepub.Encoder.KmlDirectEncoder"></bean>
 		</property>
 	</bean>
 	

@@ -1,4 +1,4 @@
-package es.uva.idelab.featurepub.ThematicEncoder;
+package es.uva.idelab.featurepub.Encoder;
 
 import java.io.OutputStream;
 
@@ -6,7 +6,7 @@ import org.geotools.styling.FeatureTypeStyle;
 import org.opengis.feature.simple.SimpleFeature;
 
 
-public interface ThematicEncoder {
+public interface Encoder {
 	
 	public OutputStream getOutputStream();
 	public void setOutputStream(OutputStream outputStream);

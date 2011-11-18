@@ -36,8 +36,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import org.springframework.beans.factory.InitializingBean;
 
-import es.uva.idelab.featurepub.ThematicEncoder.KmlThematicEncoder;
-import es.uva.idelab.featurepub.ThematicEncoder.ThematicEncoder;
+import es.uva.idelab.featurepub.Encoder.KmlEncoder;
+import es.uva.idelab.featurepub.Encoder.Encoder;
 import es.uva.idelab.featurepub.Process.Process;
 
 public class Producer implements InitializingBean {
@@ -64,7 +64,7 @@ public class Producer implements InitializingBean {
 	Map<String, Object> connectionParameters;
 	DataStore dataStore;
 	SimpleFeatureSource featureSource;
-	ThematicEncoder thematicEncoder;
+	Encoder encoder;
 	FeatureTypeStyle featureTypeStyle;
 
 	Cache cache;
@@ -104,12 +104,12 @@ public class Producer implements InitializingBean {
 		this.connectionParameters = connectionParameters;
 	}
 
-	public void setThematicEncoder(ThematicEncoder thematicEncoder) {
-		this.thematicEncoder = thematicEncoder;
+	public void setThematicEncoder(Encoder encoder) {
+		this.encoder = encoder;
 	}
 
-	public ThematicEncoder getThematicEncoder() {
-		return thematicEncoder;
+	public Encoder getThematicEncoder() {
+		return encoder;
 	}
 
 	public void setQueryFilters() throws IOException {
@@ -160,17 +160,17 @@ public class Producer implements InitializingBean {
 	}
 
 	public void produceDocument(String requestString) {
-		KmlThematicEncoder kmlThematicEncoder = (KmlThematicEncoder) thematicEncoder;
+		KmlEncoder kmlEncoder = (KmlEncoder) encoder;
 
-		thematicEncoder.startDocument("Tematicos");
-		kmlThematicEncoder.putNetworklink(requestString);
-		thematicEncoder.endDocument();
+		encoder.startDocument("Tematicos");
+		kmlEncoder.putNetworklink(requestString);
+		encoder.endDocument();
 	}
 
 	public void produceDocument() throws Exception {
 
-		thematicEncoder.startDocument("Tematicos");
-		thematicEncoder.putStyles(featureTypeStyle);
+		encoder.startDocument("Tematicos");
+		encoder.putStyles(featureTypeStyle);
 
 		// TODO intentar meterlo en el bean. No sirve con añadir
 		// <property name="coordinateSystemReproject" value="4326" />
@@ -227,11 +227,11 @@ public class Producer implements InitializingBean {
 					feature = (SimpleFeature) cache.get(key).getObjectValue();
 				}
 
-				thematicEncoder.encodeFeature(feature);
+				encoder.encodeFeature(feature);
 			}
 		} finally {
 			featuresIterator.close();
 		}
-		thematicEncoder.endDocument();
+		encoder.endDocument();
 	}
 }

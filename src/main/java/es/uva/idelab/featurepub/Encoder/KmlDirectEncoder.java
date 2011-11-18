@@ -1,4 +1,4 @@
-package es.uva.idelab.featurepub.ThematicEncoder;
+package es.uva.idelab.featurepub.Encoder;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.opengis.style.GraphicalSymbol;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
-public class KmlDirectThematicEncoder extends AbstractThematicEncoder implements KmlThematicEncoder {
+public class KmlDirectEncoder extends AbstractEncoder implements KmlEncoder {
 
 	private static final String OPEN_PLACEMARK = "\n<Placemark>";
 	private static final String CLOSE_PLACEMARK = "</Placemark>";
@@ -88,7 +88,7 @@ public class KmlDirectThematicEncoder extends AbstractThematicEncoder implements
 	private static final String OPEN_Z = "<z>";
 	private static final String CLOSE_Z = "</z>";
 	
-	public KmlDirectThematicEncoder() {}
+	public KmlDirectEncoder() {}
 
 	public void startDocument(String thematicName) {
 		try {

@@ -20,9 +20,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.uva.idelab.featurepub.Encoder.Encoder;
 import es.uva.idelab.featurepub.Process.Process;
 import es.uva.idelab.featurepub.Process.Styles;
-import es.uva.idelab.featurepub.ThematicEncoder.ThematicEncoder;
 
 public class DispatcherServlet extends HttpServlet {
 
@@ -32,7 +32,7 @@ public class DispatcherServlet extends HttpServlet {
 	Query query;
 	List<Process> processes;
 	String stylesName;
-	ThematicEncoder thematicEncoder;
+	Encoder encoder;
 	Producer producer;
 
 	private String outFile = "featurePub.kml";
@@ -41,12 +41,12 @@ public class DispatcherServlet extends HttpServlet {
 		super();
 		appContext = new ClassPathXmlApplicationContext(new String[] { "../../data/conf/applicationContext.xml" });
 		this.producer = (Producer) appContext.getBean("producer");
-		thematicEncoder = producer.getThematicEncoder();	}
+		encoder = producer.getThematicEncoder();	}
 
 	public void reloadConf() {
 		((ConfigurableApplicationContext)appContext).refresh();
 		this.producer = (Producer) appContext.getBean("producer");
-		thematicEncoder = producer.getThematicEncoder();	
+		encoder = producer.getThematicEncoder();	
 	}
 	
 	public void setOutFile(String outFile) {
@@ -94,7 +94,7 @@ public class DispatcherServlet extends HttpServlet {
 		}
 
 		ServletOutputStream outputStream = response.getOutputStream();
-		thematicEncoder.setOutputStream(outputStream);
+		encoder.setOutputStream(outputStream);
 		producer.setBbox(bboxParam);
 		producer.setQuery(query);
 		producer.setProcesses(processes);
