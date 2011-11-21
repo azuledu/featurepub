@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="DefaultStyles" class="es.uva.idelab.featurepub.process.Styles">
+		<constructor-arg name="stylesName" value="default"></constructor-arg>
+	</bean>
+	
+	<bean id="GeometryReduceDecimalDigits" class="es.uva.idelab.featurepub.process.GeometryReduceDecimalDigits">
+		<constructor-arg name="numDecDigits" value="5" />
+	</bean>
+
+	<bean id="GeometrySimplify" class="es.uva.idelab.featurepub.process.GeometrySimplify">
+		<constructor-arg name="tolerance" value="0.01" />
+	</bean>
+
+	<bean id="Centroid" class="es.uva.idelab.featurepub.process.Centroid"></bean>
+	
+	<bean id="ReservoirsDescription" class="es.uva.idelab.featurepub.process.Description">
+		<constructor-arg name="dataDAO" ref="FeatureData" />
+		<constructor-arg name="templateName" value="chd/description_reservoirs.ftl" />
+	</bean>
+	
+	<bean id="RiversPhotoDescription" class="es.uva.idelab.featurepub.process.Description">
+		<constructor-arg name="dataDAO" ref="RiversData" />
+		<constructor-arg name="templateName" value="chd/description_rivers.ftl" />
+		<property name="photos" ref="RiversPhoto" />
+	</bean>
+	
+	<bean id="ReservoirsPhotoDescription" class="es.uva.idelab.featurepub.process.Description">
+		<constructor-arg name="dataDAO" ref="FeatureData" />
+		<constructor-arg name="templateName" value="chd/description_reservoirs.ftl" />
+		<property name="photos" ref="ReservoirsPhoto" />
+	</bean>	
+	
+	<bean id="LakesPhotoDescription" class="es.uva.idelab.featurepub.process.Description">
+		<constructor-arg name="dataDAO" ref="FeatureData" />
+		<constructor-arg name="templateName" value="chd/description_lakes.ftl" />
+		<property name="photos" ref="LakesPhoto" />
+	</bean>	
+	
+	<bean id="ChannelDescription" class="es.uva.idelab.featurepub.process.Description">
+		<constructor-arg name="dataDAO" ref="FeatureData" />
+		<constructor-arg name="templateName" value="chd/description_channel.ftl" />
+	</bean>	
+
+	<bean id="RiversPhoto" class="es.uva.idelab.featurepub.process.data.PhotoData">
+		<constructor-arg name="dataSource" ref="dataSourceCHD" />
+		<constructor-arg name="typeName" value="RIVER_SEGMENT_PHOTO" />
+		<property name="foreignId" value="RIVER_SEGMENT_FK" />
+		<property name="photoId" value="PHOTO_FK" />
+		<property name="preferred" value="PREFERRED" />
+	</bean>
+
+	<bean id="ReservoirsPhoto" class="es.uva.idelab.featurepub.process.data.PhotoData">
+		<constructor-arg name="dataSource" ref="dataSourceCHD" />
+		<constructor-arg name="typeName" value="RESERVOIR_SEGMENT_PHOTO" />
+		<property name="foreignId" value="RESERVOIR_SEGMENT_FK" />
+		<property name="photoId" value="PHOTO_FK" />
+		<property name="preferred" value="PREFERRED" />
+	</bean>
+	
+	<bean id="LakesPhoto" class="es.uva.idelab.featurepub.process.data.PhotoData">
+		<constructor-arg name="dataSource" ref="dataSourceCHD" />
+		<constructor-arg name="typeName" value="LAKE_SEGMENT_PHOTO" />
+		<property name="foreignId" value="LAKE_SEGMENT_FK" />
+		<property name="photoId" value="PHOTO_FK" />
+		<property name="preferred" value="PREFERRED" />
+	</bean>
+	
+	<bean id="Name" class="es.uva.idelab.featurepub.process.Name">
+		<constructor-arg name="nameAttribute" value="NAME" />
+	</bean>	
+
+	<!-- PROCESSES -->
+
+	<bean id="ReservoirsAreaPrismProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="DefaultStyles" />
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="ReservoirsAreaPrismAltitude" class="es.uva.idelab.featurepub.process.thematic.Altitude">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="AREA" />
+					<constructor-arg name="thematicAttributeValueProportion" value="500" />
+				</bean>
+				<ref local="Name" />				
+				<ref local="ReservoirsPhotoDescription" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="ReservoirsCollada3DProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="DefaultStyles" />
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="ReservoirsCollada3DCollada" class="es.uva.idelab.featurepub.process.thematic.Collada">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="AREA" />
+					<constructor-arg name="thematicScaleX" value="5" />
+					<constructor-arg name="thematicScaleY" value="5" />
+					<constructor-arg name="thematicScaleZ" value="5" />
+					<constructor-arg name="colladaLink" value="http://itastdevserver.tel.uva.es:8080/GoogleEarthTematico/collada/skpfile.dae" />
+				</bean>
+				<ref local="Name" />
+				<ref local="ReservoirsPhotoDescription" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="ReservoirsBarProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="DefaultStyles" />
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="ReservoirsBarBar" class="es.uva.idelab.featurepub.process.thematic.Bar">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="AREA" />
+					<constructor-arg name="thematicScaleX" value="4" />
+					<constructor-arg name="thematicScaleY" value="4" />
+					<constructor-arg name="thematicScaleZ" value="1" />
+					<constructor-arg name="colladaLink" value="http://itastdevserver.tel.uva.es:8080/GoogleEarthTematico/collada/bar.dae" />
+				</bean>
+				<bean id="ReservoirsBarName" class="es.uva.idelab.featurepub.process.Name">
+					<constructor-arg name="nameAttribute" value="NAME" />
+				</bean>
+				<ref local="ReservoirsPhotoDescription" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="LakesCentroidProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="Centroid" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="LakesCentroidDescription" class="es.uva.idelab.featurepub.process.Description">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="templateName" value="chd/description_lakes.ftl" />
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="LakesAreaBufferProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<bean id="Buffer" class="es.uva.idelab.featurepub.process.thematic.Buffer">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="AREA" />
+					<constructor-arg name="thematicAttributeValueProportion" value="0.1" />
+				</bean>
+				<ref local="GeometryReduceDecimalDigits" />
+				<ref local="LakesPhotoDescription" />	
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="LakesPhotoProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="DefaultStyles" />
+				<ref local="Centroid" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<ref local="LakesPhotoDescription" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="RiversProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="DefaultStyles" />
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<ref local="Name" />
+				<ref local="RiversPhotoDescription" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="LakesChoroplethProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="LakesChoropleth" class="es.uva.idelab.featurepub.process.thematic.Choropleth">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="AREA" />
+					<constructor-arg name="typeName" value="LAKE_SEGMENT" />
+					<constructor-arg name="dataSource" ref="dataSourceCHD" />
+					<constructor-arg name="maxColor" value="#FF0000" />
+					<constructor-arg name="minColor" value="#FFFF00" />
+					<constructor-arg name="noDataColor" value="#0000FF" />
+					<constructor-arg name="opacity" value="1" />
+				</bean>
+				<ref local="LakesPhotoDescription" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="RiversChoroplethRangesProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="RiversChoroplethRanges" class="es.uva.idelab.featurepub.process.thematic.ChoroplethRanges">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="LENGTH" />
+					<constructor-arg name="typeName" value="RIVER_SEGMENT" />
+					<constructor-arg name="dataSource" ref="dataSourceCHD" />
+					<constructor-arg name="noDataColor" value="#0000FF" />
+					<constructor-arg name="opacity" value="1" />
+					<constructor-arg name="ranges">
+						<map>
+							<entry key="1" value="style1" />
+							<entry key="0.75" value="style2" />
+							<entry key="0.5" value="style3" />
+							<entry key="0.25" value="style4" />
+						</map>
+					</constructor-arg>
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="ChannelChoroplethProcess" class="java.util.Vector">
+		<constructor-arg>
+			<list>
+				<ref local="GeometrySimplify" />
+				<ref local="GeometryReduceDecimalDigits" />
+				<bean id="ChannelChoropleth" class="es.uva.idelab.featurepub.process.thematic.Choropleth">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="EFFICIENCY" />
+					<constructor-arg name="typeName" value="CHANNEL_SEGMENT" />
+					<constructor-arg name="dataSource" ref="dataSourceCHD" />
+					<constructor-arg name="maxColor" value="#FF0000" />
+					<constructor-arg name="minColor" value="#FFFF00" />
+					<constructor-arg name="noDataColor" value="#0000FF" />
+					<constructor-arg name="opacity" value="1" />
+				</bean>
+				<bean id="ChannelChoroplethBar" class="es.uva.idelab.featurepub.process.thematic.Bar">
+					<constructor-arg name="dataDAO" ref="FeatureData" />
+					<constructor-arg name="thematicAttribute" value="LENGTH" />
+					<constructor-arg name="thematicScaleX" value="4" />
+					<constructor-arg name="thematicScaleY" value="4" />
+					<constructor-arg name="thematicScaleZ" value="0.001" />
+					<constructor-arg name="colladaLink" value="http://itastdevserver.tel.uva.es:8080/GoogleEarthTematico/collada/bar.dae" />
+				</bean>
+				<ref local="Name" />
+				<ref local="ChannelDescription" />
+			</list>
+		</constructor-arg>
+	</bean>	
+	
+</beans>

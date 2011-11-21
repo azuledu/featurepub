@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="defaultHints" class="org.geotools.factory.GeoTools" factory-method="getDefaultHints"></bean>
+
+	<bean id="ff" class="org.geotools.factory.CommonFactoryFinder" factory-method="getFilterFactory2">
+		<constructor-arg>
+			<ref local="defaultHints" />
+		</constructor-arg>
+	</bean>
+
+
+
+	<!-- Filters -->
+
+	<bean id="FilterArea" factory-bean="ff" factory-method="greater">
+		<constructor-arg>
+			<bean factory-bean="ff" factory-method="property">
+				<constructor-arg>
+					<value>AREA</value>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean factory-bean="ff" factory-method="literal">
+				<constructor-arg>
+					<value>1</value>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+
+</beans>

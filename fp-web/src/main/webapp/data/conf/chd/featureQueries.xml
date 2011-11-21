@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="ReservoirsAreaPrismQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="RESERVOIR_SEGMENT" />
+<!-- 		<property name="propertyNames">
+			<list>
+				<value>GEOMETRY</value>
+				<value>NAME</value>
+				<value>AREA</value>
+			</list>
+		</property>  -->
+		<property name="filter" ref="FilterArea" />
+		<!--		<property name="coordinateSystemReproject" value="4326" />-->
+	</bean>
+	
+	<bean id="ReservoirsCollada3DQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="RESERVOIR_SEGMENT" />
+	</bean>
+	
+	<bean id="ReservoirsBarQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="RESERVOIR_SEGMENT" />
+	</bean>
+
+	<bean id="LakesCentroidQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="LAKE_SEGMENT" />
+	</bean>
+
+	<bean id="LakesAreaBufferQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="LAKE_SEGMENT" />
+	</bean>
+
+	<bean id="LakesPhotoQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="LAKE_SEGMENT" />
+	</bean>
+	
+	<bean id="LakesChoroplethQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="LAKE_SEGMENT" />
+	</bean>
+
+
+	<bean id="RiversQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="RIVER_SEGMENT" />
+	</bean>	
+	
+	<bean id="RiversChoroplethRangesQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="RIVER_SEGMENT" />
+	</bean>	
+	
+
+	<bean id="ChannelChoroplethQuery" class="org.geotools.data.Query">
+		<property name="typeName" value="CHANNEL_SEGMENT" />
+	</bean>
+	
+</beans>
