@@ -20,33 +20,15 @@
     <import resource="chd/data.xml"/>
     
         
-	<!-- freemarker config -->
-<!--	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-	  <property name="templateLoaderPath" value="/WEB-INF/description_templates/"/>
-	</bean>
- -->	
-	<!-- 
-	  View resolvers can also be configured with ResourceBundles or XML files. If you need
-	  different view resolving based on Locale, you have to use the resource bundle resolver.
-	-->
-<!-- 	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-	  <property name="cache" value="true"/>
-	  <property name="prefix" value=""/>
-	  <property name="suffix" value=".ftl"/>
-	</bean>
- -->
- 
-
-	
  	<bean id="producer" class="es.uva.idelab.featurepub.Producer" >
         <constructor-arg>
  			<bean name="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-				<property name="configLocation" value="/../../data/ehcache.xml" />
+				<property name="configLocation" value="/conf/ehcache.xml" />
 			</bean>       
         </constructor-arg>
         <property name="connectionParameters" ref="connectionParametersDBCHD" />
 		<property name="thematicEncoder" >
-			<bean class="es.uva.idelab.featurepub.encoder.KmlDirectEncoder"></bean>
+			<bean class="es.uva.idelab.featurepub.encoder.kml.KmlDirectEncoder"></bean>
 		</property>
 	</bean>
 	
