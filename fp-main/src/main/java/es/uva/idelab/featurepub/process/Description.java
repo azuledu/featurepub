@@ -1,5 +1,6 @@
 package es.uva.idelab.featurepub.process;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -8,10 +9,10 @@ import java.util.Map;
 
 import org.opengis.feature.simple.SimpleFeature;
 
-import es.uva.idelab.featurepub.DispatcherServlet;
 import es.uva.idelab.featurepub.process.data.DataDAO;
 import es.uva.idelab.featurepub.process.data.DataUtilities;
 import es.uva.idelab.featurepub.process.data.PhotoData;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -21,9 +22,14 @@ public class Description implements Process {
 
 	DataDAO dataDAO = null;
 	List<DataDAO> dataDAOList = null;
-	final String templateName;
+	String templateDir;
+	String templateName;
 	Template template;
 	PhotoData photos;
+
+	public void setTemplate(Template template) {
+		this.template = template;
+	}
 
 	public PhotoData getPhotos() {
 		return photos;
@@ -34,18 +40,23 @@ public class Description implements Process {
 	}
 
 	/**
-	 * @param templateName
-	 *            - Freemarker template file name.
+	 * @param templateName - Freemarker template file name.
 	 */
-	public Description(DataDAO dataDAO, String templateName) {
+	public Description(DataDAO dataDAO, String templateDir, String templateName) {
 		this.dataDAO = dataDAO;
+		this.templateDir = templateDir;
 		this.templateName = templateName;
 
 		Configuration freemarkerConfig = new Configuration();
-		freemarkerConfig.setClassForTemplateLoading(DispatcherServlet.class, "../../../../../../data/templates");
-		freemarkerConfig.setObjectWrapper(new DefaultObjectWrapper());
+
 
 		try {
+			
+			freemarkerConfig.setDirectoryForTemplateLoading(new File(templateDir));
+			//freemarkerConfig.setClassForTemplateLoading(Styles.class, "../../../../../../data/templates");
+			//freemarkerConfig.setServletContextForTemplateLoading(sctxt, path)
+			freemarkerConfig.setObjectWrapper(new DefaultObjectWrapper());
+			
 			this.template = freemarkerConfig.getTemplate(templateName);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,15 +64,15 @@ public class Description implements Process {
 	}
 
 	/**
-	 * @param templateName
-	 *            - Freemarker template file name.
+	 * @param templateName - Freemarker template file name.
 	 */
-	public Description(List<DataDAO> dataDAOList, String templateName) {
+/*	public Description(List<DataDAO> dataDAOList, FreeMarkerConfigurer freeMarkerConfigurer, String templateName) {
 		this.dataDAOList = dataDAOList;
 		this.templateName = templateName;
 
-		Configuration freemarkerConfig = new Configuration();
-		freemarkerConfig.setClassForTemplateLoading(DispatcherServlet.class, "../../../../../../templates");
+		Configuration freemarkerConfig = freeMarkerConfigurer.getConfiguration();
+		//Configuration freemarkerConfig = new Configuration();
+		//freemarkerConfig.setClassForTemplateLoading(DispatcherServlet.class, "../../../../../../templates");
 		freemarkerConfig.setObjectWrapper(new DefaultObjectWrapper());
 
 		try {
@@ -69,7 +80,7 @@ public class Description implements Process {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Add a "balloon" attached to the Feature.

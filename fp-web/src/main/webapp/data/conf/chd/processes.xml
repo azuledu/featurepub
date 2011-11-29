@@ -2,8 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+	<bean id="freemarkerCHDTemplatesDir" class="java.lang.String">
+		<constructor-arg value="/etc/featurepub/data/templates/chd" />
+	</bean>
+	
 	<bean id="DefaultStyles" class="es.uva.idelab.featurepub.process.Styles">
-		<constructor-arg name="stylesName" value="default"></constructor-arg>
+		<constructor-arg name="stylesName" value="default" />
 	</bean>
 	
 	<bean id="GeometryReduceDecimalDigits" class="es.uva.idelab.featurepub.process.GeometryReduceDecimalDigits">
@@ -15,33 +20,38 @@
 	</bean>
 
 	<bean id="Centroid" class="es.uva.idelab.featurepub.process.Centroid"></bean>
-	
+
 	<bean id="ReservoirsDescription" class="es.uva.idelab.featurepub.process.Description">
 		<constructor-arg name="dataDAO" ref="FeatureData" />
-		<constructor-arg name="templateName" value="chd/description_reservoirs.ftl" />
+		<constructor-arg name="templateDir" ref="freemarkerCHDTemplatesDir" />
+		<constructor-arg name="templateName" value="description_reservoirs.ftl" />
 	</bean>
 	
 	<bean id="RiversPhotoDescription" class="es.uva.idelab.featurepub.process.Description">
 		<constructor-arg name="dataDAO" ref="RiversData" />
-		<constructor-arg name="templateName" value="chd/description_rivers.ftl" />
+		<constructor-arg name="templateDir" ref="freemarkerCHDTemplatesDir" />		
+		<constructor-arg name="templateName" value="description_rivers.ftl" />
 		<property name="photos" ref="RiversPhoto" />
 	</bean>
 	
 	<bean id="ReservoirsPhotoDescription" class="es.uva.idelab.featurepub.process.Description">
 		<constructor-arg name="dataDAO" ref="FeatureData" />
-		<constructor-arg name="templateName" value="chd/description_reservoirs.ftl" />
+		<constructor-arg name="templateDir" ref="freemarkerCHDTemplatesDir" />				
+		<constructor-arg name="templateName" value="description_reservoirs.ftl" />
 		<property name="photos" ref="ReservoirsPhoto" />
 	</bean>	
 	
 	<bean id="LakesPhotoDescription" class="es.uva.idelab.featurepub.process.Description">
 		<constructor-arg name="dataDAO" ref="FeatureData" />
-		<constructor-arg name="templateName" value="chd/description_lakes.ftl" />
+		<constructor-arg name="templateDir" ref="freemarkerCHDTemplatesDir" />				
+		<constructor-arg name="templateName" value="description_lakes.ftl" />
 		<property name="photos" ref="LakesPhoto" />
 	</bean>	
 	
 	<bean id="ChannelDescription" class="es.uva.idelab.featurepub.process.Description">
 		<constructor-arg name="dataDAO" ref="FeatureData" />
-		<constructor-arg name="templateName" value="chd/description_channel.ftl" />
+		<constructor-arg name="templateDir" ref="freemarkerCHDTemplatesDir" />				
+		<constructor-arg name="templateName" value="description_channel.ftl" />
 	</bean>	
 
 	<bean id="RiversPhoto" class="es.uva.idelab.featurepub.process.data.PhotoData">
@@ -138,10 +148,7 @@
 			<list>
 				<ref local="Centroid" />
 				<ref local="GeometryReduceDecimalDigits" />
-				<bean id="LakesCentroidDescription" class="es.uva.idelab.featurepub.process.Description">
-					<constructor-arg name="dataDAO" ref="FeatureData" />
-					<constructor-arg name="templateName" value="chd/description_lakes.ftl" />
-				</bean>
+				<ref local="LakesPhotoDescription" />
 			</list>
 		</constructor-arg>
 	</bean>

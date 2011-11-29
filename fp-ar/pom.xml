@@ -8,6 +8,5 @@
   	<groupId>es.uva.idelab</groupId>
   	<artifactId>featurepub</artifactId>
   	<version>0.1-SNAPSHOT</version>
-  	<relativePath>..</relativePath>
   </parent>
 </project>

@@ -10,6 +10,13 @@
 	<groupId>es.uva.idelab.featurepub</groupId>
 	<artifactId>fp-web</artifactId>
   	<packaging>war</packaging>
-  	<name>Feature Publisher - Maven Webapp</name>
+  	<name>Feature Publisher - Webapp</name>
   	<description>Web module</description>
+  	<dependencies>
+  		<dependency>
+  			<groupId>es.uva.idelab.featurepub</groupId>
+  			<artifactId>fp-main</artifactId>
+  			<version>0.1-SNAPSHOT</version>
+  		</dependency>
+  	</dependencies>
 </project>
