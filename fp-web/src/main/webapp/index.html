@@ -1,14 +1,78 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<script type="text/javascript">
-   window.location.replace("data/www/chd.html");
-</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Feature Publisher</title>
+	<link rel="stylesheet" type="text/css" href="css/featurepub.css" />
 </head>
 <body>
-    <p><b>Redirecting to the actual home page.</b></p>
-    <p>If you're stuck here, it means you don't have javascript enabled.</p>
+	<div id="wrapper">
+		<div id="banner">
+			<div id="header">
+				<div id="header-inner">
+					<a id="logo" href="http://idelab.uva.es/"><img id="logo-image"
+						src="img/logo.png" alt="IDELab" /></a>
+					<div id="site-slogan">Feature Publisher</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="main">
+			<div id="content">
+
+				<form action="dispatcher" method="get">
+					<fieldset>
+						<legend>Consultas tem&aacute;ticas</legend>
+						<br /> <select NAME="queryName" SIZE="1">
+							<!-- 		<option VALUE="HidroelectricPowerStation">Centrales Hidroel&eacute;ctricas</option>
+				<option VALUE="RiversPrismLength">Ríos como prismas en funcion de su longitud</option>			
+				<option VALUE="RiversChoroplethRate">Ríos como coropletas en funcion de su índice de sinusoidad</option>	-->
+							<option VALUE="Rivers">Ríos con descripción y foto</option>
+							<option VALUE="LakesCentroid">Centroide de los Lagos</option>
+							<option VALUE="LakesAreaBuffer">Buffer según el Area de
+								los Lagos</option>
+							<option VALUE="ReservoirsAreaPrism">Embalses como
+								prismas en funcion de su área</option>
+							<option VALUE="ReservoirsCollada3D">Embalses como
+								COLLADA 3D en funcion de su área</option>
+							<option VALUE="ReservoirsBar">Embalses como barras en
+								funcion de su área</option>
+
+							<option VALUE="LakesPhoto">Fotografías de Lagos</option>
+							<option VALUE="LakesChoropleth">Lagos como choropletas
+								en función de su área</option>
+							<option VALUE="RiversChoroplethRanges">Ríos como
+								choropletas por rangos en función de su longitud</option>
+							<option VALUE="ChannelChoropleth">Canales como
+								choropletas en función de su eficiencia y barras en función de
+								su longitud</option>
+
+						</select> <br /> <br /> <br /> <input type="submit" name="form_action"
+							value="Preview"> <input type="submit" name="form_action"
+							value="Download"> <input type="submit" name="form_action"
+								value="NetworkLink"> <input style="float: right;"
+									type="submit" name="form_action" value="ReloadConf">
+					</fieldset>
+					<br />
+				</form>
+
+			</div>
+			<!-- content -->
+		</div>
+		<!-- main -->
+	</div>
+	<!-- wrapper -->
+	<div id="footer">
+		<hr />
+		<p class="left"></p>
+		<p class="right">
+			<a href="http://idelab.uva.es/"><img
+				src="http://img.idelab.uva.es/world_logo.png" alt="IDELab"
+				height="50px" /></a> <span><b>IDELab</b> was created for the
+				promotion and development of the use of the <br />Spatial Data
+				Infraestructures (SDI) by developing pilot projects and <br />
+				demonstrating experimental technologies. </span>
+		</p>
+	</div>
+	<!-- footer -->
 </body>
 </html>
