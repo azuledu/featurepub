@@ -57,13 +57,13 @@ public class DispatcherServlet extends HttpServlet {
 		appContext =  WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		
 		producer = (Producer) appContext.getBean("producer");
-		encoder = producer.getThematicEncoder();
+		encoder = producer.getEncoder();
 	}
 
 	public void reloadConf() {
 		((ConfigurableApplicationContext) appContext).refresh();
 		this.producer = (Producer) appContext.getBean("producer");
-		encoder = producer.getThematicEncoder();
+		encoder = producer.getEncoder();
 	}
 
 	@SuppressWarnings("unchecked")

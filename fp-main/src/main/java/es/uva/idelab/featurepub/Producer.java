@@ -112,11 +112,11 @@ public class Producer implements InitializingBean {
 		this.connectionParameters = connectionParameters;
 	}
 
-	public void setThematicEncoder(Encoder encoder) {
+	public void setEncoder(Encoder encoder) {
 		this.encoder = encoder;
 	}
 
-	public Encoder getThematicEncoder() {
+	public Encoder getEncoder() {
 		return encoder;
 	}
 
