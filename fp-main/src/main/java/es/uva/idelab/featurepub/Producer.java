@@ -54,6 +54,7 @@ public class Producer implements InitializingBean {
 		}
 	}
 
+	private String outFile;
 	ReferencedEnvelope bbox;
 	private double xMin = -170;
 	private double xMax = 170;
@@ -81,6 +82,13 @@ public class Producer implements InitializingBean {
 		}
 	}
 
+	public void setOutFile(String outFile) {
+		this.outFile = outFile;
+	}
+
+	public String getOutFile() {
+		return outFile;
+	}
 	public void setBbox(String bboxParam) {
 		if (bboxParam != null) {
 			// BBOX=[longitude_west, latitude_south, longitude_east, latitude_north]

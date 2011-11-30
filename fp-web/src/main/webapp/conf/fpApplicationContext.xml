@@ -27,6 +27,7 @@
 			</bean>       
         </constructor-arg>
         <property name="connectionParameters" ref="connectionParametersDBCHD" />
+        <property name="outFile" value="featurePub.kml" />        
 		<property name="thematicEncoder" >
 			<bean class="es.uva.idelab.featurepub.encoder.kml.KmlDirectEncoder"></bean>
 		</property>

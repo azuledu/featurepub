@@ -38,7 +38,6 @@ public class DispatcherServlet extends HttpServlet {
 	Encoder encoder;
 	Producer producer;
 
-	private String outFile = "featurePub.kml";
 
 	public DispatcherServlet() {
 		super();
@@ -65,10 +64,6 @@ public class DispatcherServlet extends HttpServlet {
 		((ConfigurableApplicationContext) appContext).refresh();
 		this.producer = (Producer) appContext.getBean("producer");
 		encoder = producer.getThematicEncoder();
-	}
-
-	public void setOutFile(String outFile) {
-		this.outFile = outFile;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -106,7 +101,7 @@ public class DispatcherServlet extends HttpServlet {
 		} else { // "Download" y "NetworkLink"
 			try {
 				response.setContentType("application/vnd.google-earth.kml+xml;charset=UTF-8");
-				response.setHeader("Content-Disposition", "attachment;filename=" + outFile);
+				response.setHeader("Content-Disposition", "attachment;filename=" + producer.getOutFile());
 			} catch (Exception e) {
 				logger.error("Error configuring response" + e.getMessage(), e);
 			}
