@@ -216,6 +216,13 @@
 		</plugins>
 		<finalName>FeaturePub</finalName>
 	</build>
+	
+	<scm>
+		<connection>scm:svn:http://svn.idelab.uva.es/${project.parent.artifactId}/trunk/${project.parent.artifactId}</connection>
+		<developerConnection>scm:svn:http://svn.idelab.uva.es/${project.parent.artifactId}/trunk/${project.parent.artifactId}</developerConnection>
+		<tag>scm:svn:http://svn.idelab.uva.es/${project.parent.artifactId}/trunk/${project.parent.artifactId}</tag>
+	</scm>
+	
 	<modules>
 		<module>fp-main</module>
 		<module>fp-web</module>
