@@ -73,5 +73,10 @@ public class KmlGtXmlEncoder extends AbstractEncoder implements KmlEncoder {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public String getMimeType() {
+		return "application/vnd.google-earth.kml+xml;charset=UTF-8";
+	}
 	
 }

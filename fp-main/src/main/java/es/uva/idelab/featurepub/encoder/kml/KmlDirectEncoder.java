@@ -500,4 +500,9 @@ public class KmlDirectEncoder extends AbstractEncoder implements KmlEncoder {
 		}
 	}
 
+	@Override
+	public String getMimeType() {
+		return "application/vnd.google-earth.kml+xml;charset=UTF-8";
+	}
+
 }

@@ -22,7 +22,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import es.uva.idelab.featurepub.Producer;
+import es.uva.idelab.featurepub.Publisher;
 import es.uva.idelab.featurepub.encoder.Encoder;
 import es.uva.idelab.featurepub.process.Process;
 import es.uva.idelab.featurepub.process.Styles;
@@ -31,12 +31,12 @@ public class DispatcherServlet extends HttpServlet {
 
 	private static final Log logger = LogFactory.getLog(DispatcherServlet.class);
 	WebApplicationContext appContext;
-	String outFile;
+
 	Query query;
 	List<Process> processes;
 	String stylesName;
 	Encoder encoder;
-	Producer producer;
+	Publisher publisher;
 
 
 	public DispatcherServlet() {
@@ -52,18 +52,17 @@ public class DispatcherServlet extends HttpServlet {
 		if (file != null) {
 			PropertyConfigurator.configure(prefix + file);
 		}
-	
 		
 		appContext =  WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		
-		producer = (Producer) appContext.getBean("producer");
-		encoder = producer.getEncoder();
+		publisher = (Publisher) appContext.getBean("publisher");
+		encoder = publisher.getEncoder();
 	}
 
 	public void reloadConf() {
 		((ConfigurableApplicationContext) appContext).refresh();
-		this.producer = (Producer) appContext.getBean("producer");
-		encoder = producer.getEncoder();
+		this.publisher = (Publisher) appContext.getBean("publisher");
+		encoder = publisher.getEncoder();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,8 +99,9 @@ public class DispatcherServlet extends HttpServlet {
 			response.setContentType("text/plain;charset=UTF-8"); // Streaming
 		} else { // "Download" y "NetworkLink"
 			try {
-				outFile = "attachment;filename=" + producer.getOutFile();
-				response.setContentType("application/vnd.google-earth.kml+xml;charset=UTF-8");
+				String outFile = "attachment;filename=" + publisher.getOutFile();
+				String mimeType = encoder.getMimeType();
+				response.setContentType(mimeType);
 				response.setHeader("Content-Disposition", outFile);
 			} catch (Exception e) {
 				logger.error("Error configuring response" + e.getMessage(), e);
@@ -110,14 +110,14 @@ public class DispatcherServlet extends HttpServlet {
 
 		ServletOutputStream outputStream = response.getOutputStream();
 		encoder.setOutputStream(outputStream);
-		producer.setBbox(bboxParam);
-		producer.setQuery(query);
-		producer.setProcesses(processes);
+		publisher.setBbox(bboxParam);
+		publisher.setQuery(query);
+		publisher.setProcesses(processes);
 
 		try {
 			URL url = Styles.class.getResource("/../../styles/" + stylesName);
 			String sld = url.getFile();
-			producer.setFeatureTypeStyleFromSLD(sld);
+			publisher.setFeatureTypeStyleFromSLD(sld);
 		} catch (Exception e) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Without sld archive");
@@ -128,14 +128,14 @@ public class DispatcherServlet extends HttpServlet {
 			String requestString = request.getQueryString().replace("NetworkLink", "Preview");
 			requestString = request.getRequestURL() + "?" + requestString.replaceAll("&", "&amp;");
 			try {
-				producer.produceDocument(requestString);
+				publisher.produceDocument(requestString);
 			} catch (Exception e) {
 				logger.error("Error producing document (NetworkLink)" + e.getMessage(), e);
 				e.printStackTrace();
 			}
 		} else {
 			try {
-				producer.produceDocument();
+				publisher.produceDocument();
 			} catch (Exception e) {
 				logger.error("Error producing document (Download/Preview)" + e.getMessage(), e);
 				e.printStackTrace();
