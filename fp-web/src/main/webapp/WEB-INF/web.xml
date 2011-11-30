@@ -14,7 +14,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/data/www/dispatcher</url-pattern>
+		<url-pattern>/dispatcher</url-pattern>
 	</servlet-mapping>
 
 	<context-param>

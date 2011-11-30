@@ -31,7 +31,7 @@ public class DispatcherServlet extends HttpServlet {
 
 	private static final Log logger = LogFactory.getLog(DispatcherServlet.class);
 	WebApplicationContext appContext;
-	
+	String outFile;
 	Query query;
 	List<Process> processes;
 	String stylesName;
@@ -100,8 +100,9 @@ public class DispatcherServlet extends HttpServlet {
 			response.setContentType("text/plain;charset=UTF-8"); // Streaming
 		} else { // "Download" y "NetworkLink"
 			try {
+				outFile = "attachment;filename=" + producer.getOutFile();
 				response.setContentType("application/vnd.google-earth.kml+xml;charset=UTF-8");
-				response.setHeader("Content-Disposition", "attachment;filename=" + producer.getOutFile());
+				response.setHeader("Content-Disposition", outFile);
 			} catch (Exception e) {
 				logger.error("Error configuring response" + e.getMessage(), e);
 			}
