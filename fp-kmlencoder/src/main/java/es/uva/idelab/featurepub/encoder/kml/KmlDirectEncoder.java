@@ -1,8 +1,12 @@
 package es.uva.idelab.featurepub.encoder.kml;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.geotools.sld.v1_1.SLDConfiguration;
 import org.geotools.styling.ExternalGraphicImpl;
 import org.geotools.styling.FeatureTypeStyle;
 import org.geotools.styling.Graphic;
@@ -11,16 +15,19 @@ import org.geotools.styling.PointSymbolizer;
 import org.geotools.styling.PolygonSymbolizer;
 import org.geotools.styling.Rule;
 import org.geotools.styling.Symbolizer;
+import org.geotools.xml.Configuration;
+import org.geotools.xml.Parser;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.style.GraphicalSymbol;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 
-import es.uva.idelab.featurepub.encoder.AbstractEncoder;
+import es.uva.idelab.featurepub.encoder.AbstractStyledEncoder;
+import es.uva.idelab.featurepub.encoder.Encoder;
 
-public class KmlDirectEncoder extends AbstractEncoder implements KmlEncoder {
-
+public class KmlDirectEncoder extends AbstractStyledEncoder implements KmlEncoder {
+	private static Log logger = LogFactory.getLog(KmlDirectEncoder.class);
 	private static final String OPEN_PLACEMARK = "\n<Placemark>";
 	private static final String CLOSE_PLACEMARK = "</Placemark>";
 	private static final String OPEN_MULTIGEOMETRY = "<MultiGeometry>";
@@ -90,9 +97,13 @@ public class KmlDirectEncoder extends AbstractEncoder implements KmlEncoder {
 	private static final String OPEN_Z = "<z>";
 	private static final String CLOSE_Z = "</z>";
 	
+	
+	FeatureTypeStyle featureTypeStyle;
+	
 	public KmlDirectEncoder() {}
 
 	public void startDocument(String thematicName) {
+		this.putStyles(featureTypeStyle);
 		try {
 			outputStream.write(("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 							+ "<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" xmlns:kml=\"http://www.opengis.net/kml/2.2\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n"
@@ -504,5 +515,28 @@ public class KmlDirectEncoder extends AbstractEncoder implements KmlEncoder {
 	public String getMimeType() {
 		return "application/vnd.google-earth.kml+xml;charset=UTF-8";
 	}
+	/**
+	 * 
+	 * @param sld
+	 */
+	public void setFeatureTypeStyleFromSLD(String sld) {
+		try {
+			FileReader fileReader = new FileReader(sld);
+			Configuration config = new SLDConfiguration();
+			Parser parser = new Parser(config);
+			FeatureTypeStyle featureTypeStyle = (FeatureTypeStyle) parser.parse(fileReader);
+			this.featureTypeStyle = featureTypeStyle;
 
+		} catch (Exception e) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("Parse failed");
+			}
+		}
+	}
+
+	@Override
+	public Encoder clone()
+	{
+		return this.clone();
+	}
 }

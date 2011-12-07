@@ -10,9 +10,9 @@ import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Geometry;
 
-import es.uva.idelab.featurepub.encoder.AbstractEncoder;
+import es.uva.idelab.featurepub.encoder.AbstractStyledEncoder;
 
-public class KmlGtXmlEncoder extends AbstractEncoder implements KmlEncoder {
+public class KmlGtXmlEncoder extends AbstractStyledEncoder implements KmlEncoder {
 
 	private Encoder encoder = new Encoder(new KMLConfiguration());
 
@@ -77,6 +77,12 @@ public class KmlGtXmlEncoder extends AbstractEncoder implements KmlEncoder {
 	@Override
 	public String getMimeType() {
 		return "application/vnd.google-earth.kml+xml;charset=UTF-8";
+	}
+
+	@Override
+	public es.uva.idelab.featurepub.encoder.Encoder clone()
+	{
+		return this.clone();
 	}
 	
 }

@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>featurepub</artifactId>
+		<groupId>es.uva.idelab</groupId>
+		<version>0.2-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	<artifactId>fp-kmlencoder</artifactId>
+	<name>KML encoder</name>
+	<description>KML encoder for Feature Publisher</description>
+	<dependencies>
+		<dependency>
+			<groupId>es.uva.idelab.featurepub</groupId>
+			<artifactId>fp-main</artifactId>
+			<version>0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools.xsd</groupId>
+			<artifactId>gt-xsd-kml</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools.xsd</groupId>
+			<artifactId>gt-xsd-sld</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -20,5 +20,10 @@ public interface Encoder extends Cloneable {
 	public void endDocument();
 	
 	public String getMimeType();
+	/**
+	 * Create a new instance to encode a document in an outputStream within an execution Thread
+	 * @return
+	 */
+	public Encoder clone() throws CloneNotSupportedException;
 	
 }

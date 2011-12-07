@@ -20,7 +20,7 @@
     <import resource="chd/data.xml"/>
     
         
- 	<bean id="publisher" class="es.uva.idelab.featurepub.Publisher" >
+ 	<bean id="publisher" class="es.uva.idelab.featurepub.BasicPublisher" >
         <constructor-arg>
  			<bean name="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 				<property name="configLocation" value="/conf/ehcache.xml" />

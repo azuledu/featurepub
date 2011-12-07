@@ -42,7 +42,8 @@ public class SQLDataDAO implements DataDAO {
 
 		Property property = feature.getProperty(featureFK);
 		Object propertyValue = property.getValue();
-		if (propertyValue != null) {
+		if (propertyValue != null) 
+		{
 			String featureFKValue = propertyValue.toString();
 			this.dataMap = (Map<String, Object>) this.simpleJdbcTemplate.queryForObject(sql, rowMapper, featureFKValue);
 		} else {
