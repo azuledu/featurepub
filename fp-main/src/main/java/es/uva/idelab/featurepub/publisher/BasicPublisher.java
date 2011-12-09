@@ -26,8 +26,8 @@ public class BasicPublisher implements  Publisher
 	/**
 	 * Ordered list of processes that filters the features sequentially.
 	 */
-	List<Process>									processes				=new ArrayList<Process>();
-	Map<String, Encoder>							encoderMap				=new HashMap<String, Encoder>();
+	List<Process>			processes	=new ArrayList<Process>();
+	Map<String, Encoder>	encoderMap	=new HashMap<String, Encoder>();
 
 	/**
 	 * Algorithm for generating documents out of the queries
@@ -181,6 +181,22 @@ public class BasicPublisher implements  Publisher
 	public void setDataStore(DataStore store)
 	{
 		this.dataStore=store;
+	}
+
+	/**
+	 * @return the encoderMap
+	 */
+	public Map<String, Encoder> getEncoders()
+	{
+		return encoderMap;
+	}
+
+	/**
+	 * @param encoderMap the encoderMap to set
+	 */
+	public void setEncoders(Map<String, Encoder> encoderMap)
+	{
+		this.encoderMap=encoderMap;
 	}
 
 }

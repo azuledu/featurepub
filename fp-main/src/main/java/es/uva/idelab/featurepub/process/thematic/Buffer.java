@@ -1,12 +1,14 @@
 package es.uva.idelab.featurepub.process.thematic;
 
 import org.opengis.feature.simple.SimpleFeature;
+
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.uva.idelab.featurepub.process.AbstractProcess;
 import es.uva.idelab.featurepub.process.Process;
 import es.uva.idelab.featurepub.process.data.DataDAO;
 
-public class Buffer implements Process {
+public class Buffer extends AbstractProcess implements Process {
 
 	DataDAO dataDAO;
 	final String thematicAttribute;

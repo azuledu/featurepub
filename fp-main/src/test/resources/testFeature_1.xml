@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config />
+
+	
+	<bean id="testPublisher1"
+		class="es.uva.idelab.featurepub.publisher.BasicPublisher">
+		<description>View over the data in a datastore</description>
+		<property name="dataStore" ref="testFeatureStore"/>
+		<property name="query" ref="simpleFeatureType"/>
+		<property name="producer" ref="BasicProducer"/>
+		<property name="processes">
+			<list>
+			<ref bean="Centroid"/>
+			</list>
+		</property>
+		<property name="encoders">
+			<map>
+			<entry key="Test" value-ref="dummyEncoder" />
+			<entry key="Dummy" value-ref="dummyEncoder" />
+			</map>
+		</property>
+	</bean>
+	<bean id="simpleFeatureType" class="org.geotools.data.Query">
+		<property name="typeName" value="Simple" />
+	</bean>
+	
+</beans>

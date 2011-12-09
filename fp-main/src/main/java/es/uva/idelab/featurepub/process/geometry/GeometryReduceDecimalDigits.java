@@ -1,4 +1,4 @@
-package es.uva.idelab.featurepub.process;
+package es.uva.idelab.featurepub.process.geometry;
 
 import org.opengis.feature.simple.SimpleFeature;
 
@@ -6,7 +6,10 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.PrecisionModel;
 import com.vividsolutions.jts.precision.GeometryPrecisionReducer;
 
-public class GeometryReduceDecimalDigits implements Process {
+import es.uva.idelab.featurepub.process.AbstractProcess;
+import es.uva.idelab.featurepub.process.Process;
+
+public class GeometryReduceDecimalDigits extends AbstractProcess implements Process {
 
 	final int numDecDigits;
 

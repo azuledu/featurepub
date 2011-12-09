@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.dbcp.BasicDataSource;
-
 import org.opengis.feature.simple.SimpleFeature;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
+import es.uva.idelab.featurepub.process.AbstractProcess;
 import es.uva.idelab.featurepub.process.Process;
 import es.uva.idelab.featurepub.process.data.DataDAO;
 import es.uva.idelab.featurepub.process.data.DataUtilities;
 
-public class Choropleth implements Process {
+public class Choropleth extends AbstractProcess implements Process {
 
 	DataDAO dataDAO;
 	BasicDataSource dataSource;

@@ -1,11 +1,11 @@
 package es.uva.idelab.featurepub.process;
 
-import es.uva.idelab.featurepub.process.data.DataUtilities;
-
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class Name implements Process {
+import es.uva.idelab.featurepub.process.data.DataUtilities;
+
+public class Name extends AbstractProcess implements Process {
 
 	final String nameAttribute;
 
@@ -25,8 +25,7 @@ public class Name implements Process {
 		Property property = feature.getProperty(nameAttribute);
 		String name = (String) property.getValue();
 
-		DataUtilities dataUtilities = new DataUtilities();
-		feature = dataUtilities.addAttribute(feature, "name", name);
+		feature = DataUtilities.addAttribute(feature, Process.ATTR_NAME, name);
 
 		return feature;
 	}

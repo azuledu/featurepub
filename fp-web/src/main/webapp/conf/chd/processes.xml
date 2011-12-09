@@ -11,15 +11,15 @@
 		<constructor-arg name="stylesName" value="default" />
 	</bean>
 	
-	<bean id="GeometryReduceDecimalDigits" class="es.uva.idelab.featurepub.process.GeometryReduceDecimalDigits">
+	<bean id="GeometryReduceDecimalDigits" class="es.uva.idelab.featurepub.process.geometry.GeometryReduceDecimalDigits">
 		<constructor-arg name="numDecDigits" value="5" />
 	</bean>
 
-	<bean id="GeometrySimplify" class="es.uva.idelab.featurepub.process.GeometrySimplify">
+	<bean id="GeometrySimplify" class="es.uva.idelab.featurepub.process.geometry.GeometrySimplify">
 		<constructor-arg name="tolerance" value="0.01" />
 	</bean>
 
-	<bean id="Centroid" class="es.uva.idelab.featurepub.process.Centroid"></bean>
+	<bean id="Centroid" class="es.uva.idelab.featurepub.process.geometry.Centroid"></bean>
 
 	<bean id="ReservoirsDescription" class="es.uva.idelab.featurepub.process.Description">
 		<constructor-arg name="dataDAO" ref="FeatureData" />

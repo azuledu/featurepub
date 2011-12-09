@@ -7,11 +7,12 @@ import org.opengis.feature.simple.SimpleFeature;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.uva.idelab.featurepub.process.AbstractProcess;
 import es.uva.idelab.featurepub.process.Process;
 import es.uva.idelab.featurepub.process.data.DataDAO;
 import es.uva.idelab.featurepub.process.data.DataUtilities;
 
-public class Collada implements Process {
+public class Collada extends AbstractProcess implements Process {
 
 	DataDAO dataDAO;
 	final String thematicAttribute;

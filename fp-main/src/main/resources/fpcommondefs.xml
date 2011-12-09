@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="freemarkerCHDTemplatesDir" class="java.lang.String">
+		<constructor-arg value="/etc/featurepub/data/templates/chd" />
+	</bean>
+	
+	<bean id="DefaultStyles" class="es.uva.idelab.featurepub.process.Styles">
+		<constructor-arg name="stylesName" value="default" />
+	</bean>
+	
+	<bean id="GeometryReduceDecimalDigits" class="es.uva.idelab.featurepub.process.geometry.GeometryReduceDecimalDigits">
+		<constructor-arg name="numDecDigits" value="5" />
+	</bean>
+
+	<bean id="GeometrySimplify" class="es.uva.idelab.featurepub.process.geometry.GeometrySimplify">
+		<constructor-arg name="tolerance" value="0.01" />
+	</bean>
+
+	<bean id="Centroid" class="es.uva.idelab.featurepub.process.geometry.Centroid"></bean>
+
+	<bean id="Name" class="es.uva.idelab.featurepub.process.Name">
+		<constructor-arg name="nameAttribute" value="NAME" />
+	</bean>
+	
+</beans>

@@ -21,9 +21,7 @@
 		<dependency>
 			<groupId>com.googlecode.ehcache-spring-annotations</groupId>
 			<artifactId>ehcache-spring-annotations</artifactId>
-			<version>1.0.1</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -45,6 +43,11 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 	</dependencies>
 </project>

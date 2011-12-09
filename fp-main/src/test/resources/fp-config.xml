@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config />
+	<import resource="fpcommondefs.xml"/>
+	<import resource="testFeature_1.xml"/>
+	<import resource="testFeature_2.xml"/>
+	
+	<bean id="config"
+		class="es.uva.idelab.featurepub.SimpleFeaturePubConfiguration">
+	<property name="serverName" value="FP Test Server" />
+	<property name="creditsText" value="Powered by IDELAB's FeaturePub" />
+	</bean>
+	<bean id="enabledPublishers" class="java.util.ArrayList">
+		<constructor-arg>
+			<list value-type="es.uva.idelab.featurepub.publisher.Publisher">
+				<ref bean="testPublisher1"/>
+				<ref bean="testPublisher2"/>
+			</list>
+		</constructor-arg>
+	</bean>		
+	
+	
+	<bean id="BasicProducer" name="BasicProducer"
+		class="es.uva.idelab.featurepub.producer.BasicProducer">
+	<description>Basic Algorithm for iterating over the features</description>
+	<constructor-arg>
+		<ref bean="cacheManager"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="cacheManager" name="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+			<property name="configLocation" value="./ehcache.xml" />
+	</bean> 
+	
+	<bean id="dummyEncoder"
+		class="es.uva.idelab.featurepub.DummyTestEncoder">
+	</bean>
+	
+	<!-- Test datasets -->
+	<bean 	id="testFeatureType"
+			class="es.uva.idelab.featurepub.TestDataUtil" 
+			factory-method="createTestFeatureType">
+	</bean>
+	<bean id="testFeatureCollection"
+			class="es.uva.idelab.featurepub.TestDataUtil"
+			factory-method="createTestFeatureCollection">
+	</bean>
+	<bean id="testFeatureStore" class="org.geotools.data.collection.CollectionDataStore">
+		<constructor-arg><ref bean="testFeatureCollection"/></constructor-arg>
+	</bean>
+	
+	<bean id="testFeatureCollection2"
+			class="es.uva.idelab.featurepub.TestDataUtil"
+			factory-method="createTest2Collection">
+	</bean>
+	<bean id="testFeatureStore2" class="org.geotools.data.collection.CollectionDataStore">
+		<constructor-arg><ref bean="testFeatureCollection2"/></constructor-arg>
+	</bean>
+	
+</beans>

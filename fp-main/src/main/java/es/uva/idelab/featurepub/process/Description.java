@@ -12,13 +12,12 @@ import org.opengis.feature.simple.SimpleFeature;
 import es.uva.idelab.featurepub.process.data.DataDAO;
 import es.uva.idelab.featurepub.process.data.DataUtilities;
 import es.uva.idelab.featurepub.process.data.PhotoData;
-
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-public class Description implements Process {
+public class Description extends AbstractProcess implements Process {
 
 	DataDAO dataDAO = null;
 	List<DataDAO> dataDAOList = null;

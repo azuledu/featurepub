@@ -6,10 +6,11 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.CoordinateFilter;
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.uva.idelab.featurepub.process.AbstractProcess;
 import es.uva.idelab.featurepub.process.Process;
 import es.uva.idelab.featurepub.process.data.DataDAO;
 
-public class Altitude implements Process {
+public class Altitude extends AbstractProcess implements Process {
 
 	DataDAO dataDAO;
 	final String thematicAttribute;
