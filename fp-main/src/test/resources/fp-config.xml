@@ -42,11 +42,11 @@
 	
 	<!-- Test datasets -->
 	<bean 	id="testFeatureType"
-			class="es.uva.idelab.featurepub.TestDataUtil" 
+			class="es.uva.idelab.featurepub.DataTestUtil" 
 			factory-method="createTestFeatureType">
 	</bean>
 	<bean id="testFeatureCollection"
-			class="es.uva.idelab.featurepub.TestDataUtil"
+			class="es.uva.idelab.featurepub.DataTestUtil"
 			factory-method="createTestFeatureCollection">
 	</bean>
 	<bean id="testFeatureStore" class="org.geotools.data.collection.CollectionDataStore">
@@ -54,7 +54,7 @@
 	</bean>
 	
 	<bean id="testFeatureCollection2"
-			class="es.uva.idelab.featurepub.TestDataUtil"
+			class="es.uva.idelab.featurepub.DataTestUtil"
 			factory-method="createTest2Collection">
 	</bean>
 	<bean id="testFeatureStore2" class="org.geotools.data.collection.CollectionDataStore">

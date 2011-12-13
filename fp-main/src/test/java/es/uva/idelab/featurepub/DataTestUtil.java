@@ -30,7 +30,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
 
-public class TestDataUtil
+public class DataTestUtil
 {
 /**
  * FeatureType named "Test" with a {@link Geometry} GEOM field

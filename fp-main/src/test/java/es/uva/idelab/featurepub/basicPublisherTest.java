@@ -47,7 +47,7 @@ private String	expectedNoFeature=
 		/**
 		 * Create sample FeatureSource	
 		 */
-		featureCollection=TestDataUtil.createTestFeatureCollection();
+		featureCollection=DataTestUtil.createTestFeatureCollection();
 		featureSource=new CollectionFeatureSource(featureCollection);	
 		store=createDataStore(featureCollection);
 	}
