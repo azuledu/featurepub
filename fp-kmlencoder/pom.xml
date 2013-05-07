@@ -8,7 +8,7 @@
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>fp-kmlencoder</artifactId>
-	<name>KML encoder</name>
+	<name>Feature Publisher - KML encoder</name>
 	<description>KML encoder for Feature Publisher</description>
 	<dependencies>
 		<dependency>
